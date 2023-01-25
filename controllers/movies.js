@@ -3,12 +3,15 @@ import { v4 } from 'uuid';
 import { data } from '../data.js';
 let movies = data;
 
+// Respond with all the movies in the database
 export const getAllMovies = (req, res) => {
   res.status(200).json({ serverMessage: 'OK', movies: movies });
 };
 
+// Create a resource with passed JSON
 export const addMovie = (req, res) => {
   const { title, director, release_date } = req.body;
+  // Check all the required field are given
   if (title && director && release_date) {
     const id = v4(); // unique id generator
     movies.push({ id, title, director, release_date });
@@ -19,9 +22,9 @@ export const addMovie = (req, res) => {
   } else {
     // Error message contains missed fields
     res.status(400).json({
-      serverMessage: `ERROR. Please make sure your request contains JSON with fields:${
+      serverMessage: `ERROR. Please make sure your request contains JSON with fields: ${
         title ? '' : 'title '
-      } ${director ? '' : 'director '}${release_date ? '' : 'release_date'}`,
+      }${director ? '' : 'director '}${release_date ? '' : 'release_date'}`,
     });
   }
 };
